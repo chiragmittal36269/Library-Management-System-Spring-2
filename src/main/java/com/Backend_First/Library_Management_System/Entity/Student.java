@@ -24,10 +24,12 @@ public class Student {
 
     private int age;
 
+    @Column(unique = true)  // for unique email
     private String email;
 
     @Enumerated(EnumType.STRING)
     Department department;
+
 
     // mappedBy is always written in parent class
     // here we write the key of parent class which helps to join two tables

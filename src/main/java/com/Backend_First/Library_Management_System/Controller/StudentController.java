@@ -1,6 +1,9 @@
 package com.Backend_First.Library_Management_System.Controller;
 
 import com.Backend_First.Library_Management_System.Entity.Student;
+import com.Backend_First.Library_Management_System.RequestDTO.StudentRequestDto;
+import com.Backend_First.Library_Management_System.RequestDTO.StudentUpdateEmailRequest;
+import com.Backend_First.Library_Management_System.ResponseDTO.StudentUpdateEmailResponse;
 import com.Backend_First.Library_Management_System.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +17,16 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+//    @PostMapping("/add")
+//    public String addStudent(@RequestBody Student student) {
+//        studentService.addStudent(student);
+//        return "Student has been added successfully";
+//    }
+
     @PostMapping("/add")
-    public String addStudent(@RequestBody Student student) {
-        studentService.addStudent(student);
+    public String addStudent(@RequestBody StudentRequestDto studentRequestDto)
+    {
+        studentService.addStudent(studentRequestDto);
         return "Student has been added successfully";
     }
 
@@ -26,8 +36,18 @@ public class StudentController {
     }
 
     @GetMapping("/get_student")
-    public List<Student> getStudentByName(@RequestParam("name") String name)
-    {
+    public List<Student> getStudentByName(@RequestParam("name") String name) {
         return studentService.getStudentByName(name);
+    }
+
+    @GetMapping("/find_by_email")
+    public String findStudentByEmail(@RequestParam("email") String email) {
+        return studentService.findStudentByEmail(email);
+    }
+
+    @PutMapping("/update_email")
+    public StudentUpdateEmailResponse updateEmail(@RequestBody StudentUpdateEmailRequest studentUpdateEmailRequest)
+    {
+        return studentService.updateEmail(studentUpdateEmailRequest);
     }
 }

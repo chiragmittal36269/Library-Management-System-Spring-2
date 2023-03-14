@@ -6,8 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,13 +25,27 @@ public class LibraryCard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String validTill;
+//    private String validTill;
 
     @Enumerated(EnumType.STRING)
     CardStatus cardStatus;
+
+    @CreationTimestamp
+    private Date creationDate;
+
+    @CreationTimestamp
+    private Date updationDate;
 
     @OneToOne           // here relation is child and parent.
     @JoinColumn         // join column will take care of primary key otherwise we pass the whole student class.
     @JsonIgnore
     Student student;    // here we pass the whole student class.
+
+
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    List<Transaction> transactionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL)
+    List<Book> bookList = new ArrayList<>();
 }

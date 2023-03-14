@@ -28,5 +28,6 @@ public class Author {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     List<Book> books = new ArrayList<>();
     // here we use this because we want to store many books in one author account
+    // because one author have many books
     // like harry potter writer has 8 books
 }
