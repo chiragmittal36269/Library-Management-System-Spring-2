@@ -11,12 +11,19 @@ import com.Backend_First.Library_Management_System.Repository.TransactionReposit
 import com.Backend_First.Library_Management_System.RequestDTO.IssueBookRequestDto;
 import com.Backend_First.Library_Management_System.ResponseDTO.IssueBookResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class TransactionService {
+
+    @Autowired
+    private JavaMailSender emailSender;
 
     @Autowired
     LibraryCardRepository libraryCardRepository;
@@ -96,6 +103,31 @@ public class TransactionService {
         issueBookResponseDto.setTransactionStatus(transaction.getTransactionStatus());
         issueBookResponseDto.setTransactionId(transaction.getTransactionNumber());
 
+
+        // these are the steps to send the email.
+        String text = "Congrats !!. "+ card.getStudent().getName() + " You have been issued " + book.getTitle() + " book." ;
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("chiragmittal36279@gmail.com");
+        message.setTo(card.getStudent().getEmail());
+        message.setSubject("Issue Book Notification");
+        message.setText(text);
+        emailSender.send(message);
+
+
         return issueBookResponseDto;
+    }
+
+
+    public String getAllTransactions(int cardId)
+    {
+        List<Transaction> transactionList = transactionRepository.getAllSuccessfulTransactionsWithCardNo(cardId);
+        String ans = "";
+        for(Transaction t : transactionList)
+        {
+            ans += t.getTransactionNumber();
+            ans += "\n";
+        }
+        return ans;
     }
 }

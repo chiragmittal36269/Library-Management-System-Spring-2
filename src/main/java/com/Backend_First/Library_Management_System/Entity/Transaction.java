@@ -37,6 +37,7 @@ public class Transaction {
     @JoinColumn
     Book book;
 
+
     @ManyToOne
     @JoinColumn
     LibraryCard card;
