@@ -28,7 +28,7 @@ public class Student {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    Department department;
+    private Department department;
 
 
     // mappedBy is always written in parent class

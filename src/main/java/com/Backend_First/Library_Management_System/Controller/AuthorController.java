@@ -1,6 +1,8 @@
 package com.Backend_First.Library_Management_System.Controller;
 
 import com.Backend_First.Library_Management_System.Entity.Author;
+import com.Backend_First.Library_Management_System.RequestDTO.AuthorRequestDto;
+import com.Backend_First.Library_Management_System.ResponseDTO.AuthorResponseDto;
 import com.Backend_First.Library_Management_System.Service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,8 @@ public class AuthorController {
     AuthorService authorService;
 
     @PostMapping("/add")
-    public String addAuthor(@RequestBody Author author) {
-        authorService.addAuthor(author);
-        return "Author added Successfully";
+    public AuthorResponseDto addAuthor(@RequestBody AuthorRequestDto authorRequestDto) {
+        return authorService.addAuthor(authorRequestDto);
     }
 
     @GetMapping("/get_authors")

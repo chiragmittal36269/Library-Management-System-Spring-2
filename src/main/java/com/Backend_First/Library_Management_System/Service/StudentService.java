@@ -6,6 +6,7 @@ import com.Backend_First.Library_Management_System.Enum.CardStatus;
 import com.Backend_First.Library_Management_System.Repository.StudentRepository;
 import com.Backend_First.Library_Management_System.RequestDTO.StudentRequestDto;
 import com.Backend_First.Library_Management_System.RequestDTO.StudentUpdateEmailRequest;
+import com.Backend_First.Library_Management_System.ResponseDTO.StudentResponseDto;
 import com.Backend_First.Library_Management_System.ResponseDTO.StudentUpdateEmailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class StudentService {
 //        studentRepository.save(student);
 //    }
 
-    public void addStudent(StudentRequestDto studentRequestDto)
+    public StudentResponseDto addStudent(StudentRequestDto studentRequestDto)
     {
         // create the student object
         Student student = new Student();
@@ -54,24 +55,39 @@ public class StudentService {
         // set the card to a student
         student.setCard(card);      // set the student to a particular card
 
-        studentRepository.save(student);    // it will save both student and card.
+        Student updatedStudent = studentRepository.save(student);    // it will save both student and card.
+
+        // return the responseDTO
+        StudentResponseDto studentResponseDto = new StudentResponseDto();
+        studentResponseDto.setName(updatedStudent.getName());
+        studentResponseDto.setAge(updatedStudent.getAge());
+        studentResponseDto.setEmail(updatedStudent.getEmail());
+        studentResponseDto.setId(updatedStudent.getId());
+        studentResponseDto.setDepartment(updatedStudent.getDepartment());
+
+        return studentResponseDto;
     }
 
     public List<Student> getStudents() {
         return studentRepository.findAll();
     }
 
-    public List<Student> getStudentByName(String name) {
-        List<Student> l = studentRepository.findAll();
+//    public List<Student> getStudentByName(String name) {
+//        List<Student> l = studentRepository.findAll();
+//
+//        List<Student> ans = new ArrayList<>();
+//
+//        for (Student s : l) {
+//            if (s.getName().equals(name)) {
+//                ans.add(s);
+//            }
+//        }
+//        return ans;
+//    }
 
-        List<Student> ans = new ArrayList<>();
-
-        for (Student s : l) {
-            if (s.getName().equals(name)) {
-                ans.add(s);
-            }
-        }
-        return ans;
+    public List<Student> getStudentByName(String name)
+    {
+        return studentRepository.findByName(name);
     }
 
     public String findStudentByEmail(@RequestParam("email") String email) {

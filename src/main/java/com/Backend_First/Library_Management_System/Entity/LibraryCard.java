@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -33,7 +34,8 @@ public class LibraryCard {
     @CreationTimestamp
     private Date creationDate;
 
-    @CreationTimestamp
+//    @CreationTimestamp
+    @UpdateTimestamp
     private Date updationDate;
 
     @OneToOne           // here relation is child and parent.

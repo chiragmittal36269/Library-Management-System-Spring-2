@@ -3,6 +3,7 @@ package com.Backend_First.Library_Management_System.Controller;
 import com.Backend_First.Library_Management_System.Entity.Student;
 import com.Backend_First.Library_Management_System.RequestDTO.StudentRequestDto;
 import com.Backend_First.Library_Management_System.RequestDTO.StudentUpdateEmailRequest;
+import com.Backend_First.Library_Management_System.ResponseDTO.StudentResponseDto;
 import com.Backend_First.Library_Management_System.ResponseDTO.StudentUpdateEmailResponse;
 import com.Backend_First.Library_Management_System.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,9 @@ public class StudentController {
 //    }
 
     @PostMapping("/add")
-    public String addStudent(@RequestBody StudentRequestDto studentRequestDto)
+    public StudentResponseDto addStudent(@RequestBody StudentRequestDto studentRequestDto)
     {
-        studentService.addStudent(studentRequestDto);
-        return "Student has been added successfully";
+        return studentService.addStudent(studentRequestDto);
     }
 
     @GetMapping("/get_students")
